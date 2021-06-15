@@ -1,0 +1,47 @@
+---
+title: "First Pilot Multivariate OLS"
+author: "Hamza Ali"
+date: "6/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("jtools")
+#install.packages("car")
+#install.packages("huxtable")
+library(jtools)
+library(car)
+library(huxtable)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+Pilot <- read.csv(file = 'C:/Users/hamza/Desktop/D4I Project/Pilot.csv', na.strings = "#N/A") #FILE WILL RELY ON GITHUB IDEALLY
+Pilot2 <- Pilot[,-11]
+Pilot3 <- Pilot2[,-10]
+na.omit(Pilot)
+na.omit(Pilot2)
+na.omit(Pilot3)
+```
+
+## Including Plots
+
+This ended up working, but it didn't align with Todd's findings
+
+```{r}
+model1<-lm(COVID.Cummulative.Death.Rate.6.2021 ~ IMF..FAI..Financial.Access.Index + Gini.Index.2019 + Life.Expectency.2019 + pop.density.per.kmsq + X....65yrs.2019 + X.....3.20.in.2015 + X..Disagree.Vaccines.Effective.2017, data = Pilot)
+
+model2<-lm(COVID.Cummulative.Death.Rate.6.2021 ~ IMF..FAI..Financial.Access.Index + Gini.Index.2019 + Life.Expectency.2019 + pop.density.per.kmsq + X....65yrs.2019 + X.....3.20.in.2015, data = Pilot2)
+
+model3<-lm(COVID.Cummulative.Death.Rate.6.2021 ~ IMF..FAI..Financial.Access.Index + Gini.Index.2019 + Life.Expectency.2019 + pop.density.per.kmsq + X....65yrs.2019, data = Pilot3)
+
+export_summs(model1,model2,model3)
+```
+
+
