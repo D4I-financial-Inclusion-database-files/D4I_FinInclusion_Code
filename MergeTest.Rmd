@@ -1,0 +1,26 @@
+---
+title: "MergeTest"
+author: "Hamza Ali"
+date: "6/15/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+help("merge")
+```
+
+## Merge Test
+
+This is practice for merging data
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+SetA <- read.csv(file = "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--gapminder_world/master/ddf--datapoints--aged_65plus_labour_force_participation_rate_percent--by--geo--time.csv")
+SetB <- read.csv("https://raw.githubusercontent.com/open-numbers/ddf--gapminder--gapminder_world/master/ddf--datapoints--co2_emissions_tonnes_per_person--by--geo--time.csv")
+SetC <- merge(SetA, SetB, by = c("geo","time")) #This one has no NA
+SetD <- merge(SetB, SetA, by = c("geo","time"), all = TRUE) #This one has all the rows for data
+View(SetD)
+```
+
