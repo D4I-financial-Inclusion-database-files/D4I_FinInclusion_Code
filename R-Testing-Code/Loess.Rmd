@@ -1,0 +1,30 @@
+---
+title: "Loess"
+author: "Hamza Ali"
+date: "7/8/2021"
+output: html_document
+---
+
+```{r}
+stufff <- read.csv(file = "C:/Users/hamza/Desktop/D4I Project/regressionstufff.csv", header = TRUE, skipNul = TRUE)
+#help("read.table")
+```
+
+## Creating Loess Row
+
+This part make the Loess function based on days and cases, then puts it into R
+
+```{r}
+mod <- loess(stufff$cases ~ stufff$days, span = 0.5)
+stufff$Loess <- mod$fitted
+```
+
+## Including Plots
+
+This is the visual of the plot
+```{r}
+plot(stufff$days, stufff$cases)
+lines(predict(mod), col = "red", lwd = 3)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
