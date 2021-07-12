@@ -7,7 +7,14 @@ output: html_document
 
 ```{r}
 stufff <- read.csv(file = "C:/Users/hamza/Desktop/D4I Project/regressionstufff.csv", header = TRUE, skipNul = TRUE)
-#help("read.table")
+stufff$Dummy1 <- NULL
+stufff$Dummy2 <- NULL
+for (c in 1:nrow(stufff)) {
+  stufff[c,5] <- (350 - stufff[c,5])
+}
+#stufff <- subset(stufff, days < 160) #Anything before june 8
+
+
 ```
 
 ## Creating Loess Row
@@ -15,16 +22,18 @@ stufff <- read.csv(file = "C:/Users/hamza/Desktop/D4I Project/regressionstufff.c
 This part make the Loess function based on days and cases, then puts it into R
 
 ```{r}
-mod <- loess(stufff$cases ~ stufff$days, span = 0.5)
-stufff$Loess <- mod$fitted
+
+mod <- loess.smooth(stufff$days, stufff$deaths, span = 2/5, evaluation = 349)
+stufff$Loess <- mod$y
 ```
 
 ## Including Plots
 
-This is the visual of the plot
+This is the visual of the plot and line. stoppoint is the variable that calculates the first instance of a local maximum
 ```{r}
-plot(stufff$days, stufff$cases)
-lines(predict(mod), col = "red", lwd = 3)
+stoppoint <- (which(diff(sign(diff(mod$y)))==-2)+1)[1]
+plot(stufff$days, stufff$death, xlim = c(0,stoppoint),ylim = c(0,3000))
+lines(mod$y, col = "red", lwd = 3)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
