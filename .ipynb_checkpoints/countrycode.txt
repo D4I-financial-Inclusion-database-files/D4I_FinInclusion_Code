@@ -1,0 +1,16 @@
+#Required Packages
+import pandas as pd
+!pip install dataprep
+from dataprep.clean import clean_country
+
+#Read file
+df = pd.read_csv('https://raw.githubusercontent.com/D4I-financial-Inclusion-database-files/D4I_FinInclusion_Data/main/BMJ_Data_Country_Article/uv_WHO.csv') #<--- CHANGE CSV FILE AS DESIRED
+
+#NOTE: THIS PART IS VERY VARIABLE AND IS MORE ON THE DATA CLEANING PROCESS
+uv_who.columns = ["Country", "UV"] # Ideally we would see what units its measured in and include that in column name
+uv_who = uv_who.drop(0)
+
+#Putting ISO-3 in
+df2 = clean_country(df, 'Country', output_format='alpha-3') # This method adds a column of ISO-3 based on the Country column
+df2 = df2.rename(columns = {'Country_clean':'ISO-3'}) # Renames the ISO-3 column
+df2.head()
